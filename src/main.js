@@ -35,7 +35,7 @@ const createSiteMenuTemplate = () => {
   );
 };
 
-const createFilterTemplate = () => {
+const createFiltersTemplate = () => {
   return (
     `<section class="main__filter filter container">
       <input
@@ -99,17 +99,13 @@ const createFilterTemplate = () => {
   );
 };
 
-const createBoardTemplate = () => {
+const createSortFiltersTemplate = () => {
   return (
-    `<section class="board container">
-      <div class="board__filter-list">
-        <a href="#" class="board__filter">SORT BY DEFAULT</a>
-        <a href="#" class="board__filter">SORT BY DATE up</a>
-        <a href="#" class="board__filter">SORT BY DATE down</a>
-      </div>
-
-      <div class="board__tasks"></div>
-    </section>`
+    `<div class="board__filter-list">
+      <a href="#" class="board__filter" data-sort-type="default">SORT BY DEFAULT</a>
+      <a href="#" class="board__filter" data-sort-type="date-up">SORT BY DATE up</a>
+      <a href="#" class="board__filter" data-sort-type="date-down">SORT BY DATE down</a>
+    </div>`
   );
 };
 
@@ -369,19 +365,20 @@ const createLoadMoreButtonTemplate = () => {
   );
 };
 
-const render = (container, template, place = 'beforeend') => {
+const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
-const siteMainElement = document.querySelector('.main');
-const siteHeaderElement = siteMainElement.querySelector('.main__control');
+const siteMainElement = document.querySelector(`.main`);
+const siteHeaderElement = siteMainElement.querySelector(`.main__control`);
 
 render(siteHeaderElement, createSiteMenuTemplate());
-render(siteMainElement, createFilterTemplate());
-render(siteMainElement, createBoardTemplate());
+render(siteHeaderElement, createFiltersTemplate(), `afterend`);
 
-const taskListElement = siteMainElement.querySelector('.board__tasks');
-const boardElement = siteMainElement.querySelector('.board');
+const boardElement = siteMainElement.querySelector(`.board`);
+const taskListElement = siteMainElement.querySelector(`.board__tasks`);
+
+render(boardElement, createSortFiltersTemplate(), `afterbegin`);
 
 render(taskListElement, createTaskEditTemplate());
 
